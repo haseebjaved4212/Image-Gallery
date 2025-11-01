@@ -7,7 +7,7 @@ const App = () => {
   const [index, setIndex] = useState(1);
   const getDate = async () => {
     const response = await axios.get(
-      `https://picsum.photos/v2/list?page=${index}&limit=10`
+      `https://picsum.photos/v2/list?page=${index}&limit=8`
     );
     setuserData(response.data);
   };
@@ -15,23 +15,29 @@ const App = () => {
     getDate();
   }, [index]);
   let printUserData = (
-    <h2 className="text-center text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-      Loading...
-    </h2>
+    <div className="w-full flex items-center justify-center py-24">
+      <h2 className="text-center text-white">Loading...</h2>
+    </div>
   );
+
   if (userData.length > 0) {
     printUserData = userData.map((user) => (
-      <a href={user.url} target="_blank">
-        <div
-          key={user.id}
-          className="p-4 h-60 w-60  rounded-lg hover:scale-105 transition-transform duration-300 ease-in-out "
-        >
+      <a
+        key={user.id}
+        href={user.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <div className="rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
           <img
             src={user.download_url}
             alt={user.author}
-            className="rounded  overflow-hidden w-full h-full object-cover "
+            className="w-full h-48 sm:h-56 md:h-48 lg:h-56 object-cover"
           />
-          <p className="text-center text-white">{user.author}</p>
+          <p className="text-center text-sm text-gray-300 py-2">
+            {user.author}
+          </p>
         </div>
       </a>
     ));
@@ -39,10 +45,11 @@ const App = () => {
 
   return (
     <div className="bg-black text-white min-h-screen p-2   ">
-      
-      <div className=" flex flex-wrap gap-3">{printUserData}</div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {printUserData}
+      </div>
 
-      <div className="flex justify-center items-center gap-3 mt-12 my-4">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-8 my-4">
         <button
           style={{ opacity: index <= 1 ? 0.5 : 1 }}
           className="bg-amber-500 p-2 rounded active:scale-95 text-white cursor-pointer"
@@ -55,7 +62,7 @@ const App = () => {
         >
           Prev
         </button>
-        <h2>Page {index}</h2>
+        <h2 className="py-1">Page {index}</h2>
         <button
           className="bg-amber-500 p-2 rounded active:scale-95 text-white cursor-pointer"
           onClick={() => {
