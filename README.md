@@ -74,6 +74,4 @@ I detected the following images in `src/assets`:
 
 Contributions are welcome. Open an issue or send a pull request with improvements.
 
-## License
 
-MIT
